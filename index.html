@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBot using LLaMA3</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>ChatBot using LLaMA3</h1>
+        <textarea id="prompt" placeholder="Enter your prompt..."></textarea>
+        <button onclick="generateResponse()">Generate</button>
+        <div id="response"></div>
+    </div>
+
+    <script>
+        function generateResponse() {
+            const prompt = document.getElementById('prompt').value;
+            const responseDiv = document.getElementById('response');
+            responseDiv.innerHTML = '';
+
+            if (prompt) {
+                fetch('/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ prompt: prompt })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    responseDiv.innerHTML = data.response;
+                })
+                .catch(error => {
+                    responseDiv.innerHTML = 'An error occurred: ' + error;
+                });
+            }
+        }
+    </script>
+</body>
+</html>

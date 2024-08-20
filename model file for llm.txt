@@ -1,0 +1,4 @@
+model = "meta-llama/Meta-Llama-3-8B"
+
+token for llama = "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"
+
